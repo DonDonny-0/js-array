@@ -7,22 +7,28 @@
     <main>
       <div class="image-gen">
         <div class="container">
-          <div class="image">
-            
+          <div class="images">
+            <section id="req-image">
+              <img src="https://picsum.photos/500/400" alt="placeholder">
+            </section>
           </div>
           <div class="get-email">
-
-          </div>
-          <div class="buttons">
-
+            <form action="index.html" method="post">
+              <div class="input-control">
+                <label for="email">Enter Your Email To Save An Image</label>
+                <input type="text" id="email" name="email" placeholder="Email">
+                <div class="error"></div>
+              </div>
+              <button class="submit-btn">Submit</button>
+            </form>
+            <button class="skip-btn">Skip</button>
           </div>
         </div>
       </div>
       <div class="saved-emails">
-        <div class="container">
 
-        </div>
       </div>
     </main>
+    <script src="js/main.js"></script>
   </body>
 </html>

@@ -1,0 +1,15 @@
+.email {
+
+  form {
+
+    .input-control.error input {
+      border-color: #ff3860;
+    }
+
+    .input-control .error {
+      color: #ff3860;
+      font-size: 9px;
+      height: 13px;
+    } 
+  }
+}
