@@ -1,12 +1,26 @@
 const submit = document.querySelector('.submit-btn');
 const skip = document.querySelector('.skip-btn');
-const imageClass = document.querySelector('.images')
-const url = 'https://picsum.photos/300';
+const imageClass = document.querySelector('.images');
 const section = document.querySelector('section');
 const email = document.querySelector('#email');
 const form = document.querySelector('form');
+
+let storedEmail = '';
 let storedImage = '';
 let emails = [];
+let linkedImages = [];
+let count = 0;
+
+function loadStore() {
+  const raw = localStorage.getItem('savedEmails');
+  return raw ? JSON.parse(raw) : { listOfEmails: {} };
+}
+
+
+function saveStore(store) {
+  localStorage.setItem('savedEmails', JSON.stringify(store));
+}
+
 
 function fetchImage(url) {
   return fetch(url)
@@ -15,6 +29,7 @@ function fetchImage(url) {
     .catch( error => console.log('An Error Ocurred!', error) )
 }
 
+
 function checkStatus(response) {
   if (response.ok) {
     return Promise.resolve(response);
@@ -22,21 +37,6 @@ function checkStatus(response) {
     return Promise.reject(new Error(response.statusText));
   }
 }
-
-
-// fetchImage('https://api.unsplash.com/photos/random/?client_id=WW94KIDih8ItvGBXpJdd0sMSoX6lxosKFaGuxRgkbnc')
-//     .then(generateImage)
-
-
-form.addEventListener('submit', e => {
-  e.preventDefault();
-
-  validateInputs();
-
-  // fetchImage('https://api.unsplash.com/photos/random/?client_id=WW94KIDih8ItvGBXpJdd0sMSoX6lxosKFaGuxRgkbnc')
-  //   .then(generateImage)
-});
-
 
 const setError = (element, message) => {
   const inputControl = element.parentElement;
@@ -55,35 +55,11 @@ const setSuccess = (element) => {
   errorDisplay.innerText = '';
   inputControl.classList.add('success');
   inputControl.classList.remove('error');
+
+  storedEmail = email.value;
+
+  linkImage(storedEmail);
 };
-
-
-function emailArray() {
-  if (emails.length === 0) {
-    linkImage();
-  }
-  else {
-    emails.forEach(element => {
-      if (element === email.value) {
-        linkImage();
-      }
-    });
-  }
-}
-
-
-function linkImage() {
-  const storage = document.querySelector('.saved-emails')
-  const savedEmail = document.createElement('p');
-  const newImage = document.createElement('img');
-
-  storage.appendChild(newImage);
-  savedEmail.innerHTML = `${email.value}`;
-  newImage.src = storedImage;
-  newImage.style = `width: 100px; height: 100px;` 
-
-  prevEmail = email.value;
-}
 
 
 const isValidEmail = email => {
@@ -94,10 +70,10 @@ const isValidEmail = email => {
 
 function generateImage(data) {
   const html = `
-  <img src="${data.urls.small}" alt="doggy image" style="width: 500px; height: 400px;">`;
+  <img src="${data[count].download_url}" alt="generated image" style="width: 500px; height: 400px;">`;
   section.innerHTML = html;
-  section.style = `border: 1px solid black; `
-  storedImage = data.urls.small;
+  storedImage = data[count].download_url;
+  count++;
 }
 
 
@@ -113,11 +89,77 @@ const validateInputs = () => {
   }
 }
 
+function displayImage(prevImage, currentEmail) {
+  const store = loadStore();
+
+  // for (let email in store.listOfEmails) {
+  //   store.listOfEmails[email].forEach((item, index) => {
+      
+  //   });
+  // }
+
+  const newImage = document.createElement('img');
+  const emailSection = document.querySelector('.saved-emails');
+
+  if (storedImage === '') {
+    newImage.src = prevImage;
+  }
+  else {
+    newImage.src = storedImage;
+  }
+
+  emailSection.appendChild(newImage);
+  newImage.style = `width: 200px; height: 100px;`
+}
+
+skip.addEventListener('click', () => {
+  fetchImage('https://picsum.photos/v2/list?page=2&limit=100')
+    .then( data => generateImage(data) )
+})
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+
+  validateInputs();
+});
 
 
+// function to link an image to a valid email
+function linkImage(email) {
+
+  const store = loadStore();
+  const key = email.toLowerCase();
 
 
-// skip.addEventListener('click', () => {
-//   fetchImage('https://api.unsplash.com/photos/random/?client_id=WW94KIDih8ItvGBXpJdd0sMSoX6lxosKFaGuxRgkbnc')
-//     .then(generateImage)
-// })
+  if (!store.listOfEmails[key]) store.listOfEmails[key] = [];
+
+  if (store.listOfEmails[key].includes(storedImage)) {
+    return;
+  }
+
+  store.listOfEmails[key].push(storedImage);
+  saveStore(store);
+  displayImage(null, email);
+}
+
+function preloadImages() {
+  const store = loadStore();
+
+  for (let email in store.listOfEmails) {
+    const imgDisplay = document.querySelector('.saved-emails');
+    const section = document.createElement('section');
+    imgDisplay.appendChild(section);
+    section.innerHTML = `<h1>${email}</h1>`;
+    
+    store.listOfEmails[email].forEach((item, index) => {
+      console.log(`${index}: ${item}`);
+      displayImage(item, email);
+    })
+  }
+}
+
+
+fetchImage('https://picsum.photos/v2/list?page=2&limit=100')
+  .then(generateImage)
+
+preloadImages();
