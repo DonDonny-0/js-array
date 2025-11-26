@@ -89,28 +89,36 @@ const validateInputs = () => {
   }
 }
 
-function displayImage(prevImage, currentEmail) {
+function displayImage() {
   const store = loadStore();
-
-  // for (let email in store.listOfEmails) {
-  //   store.listOfEmails[email].forEach((item, index) => {
-      
-  //   });
-  // }
-
-  const newImage = document.createElement('img');
+  const allEmails = Object.entries(store.listOfEmails);
   const emailSection = document.querySelector('.saved-emails');
+  emailSection.innerHTML = "";
 
-  if (storedImage === '') {
-    newImage.src = prevImage;
-  }
-  else {
-    newImage.src = storedImage;
-  }
+  allEmails.forEach(([email, images]) => {
+    console.log(email, images);
+    const div = document.createElement('div');
+    div.innerHTML = `<h1>${email}</h1>`;
 
-  emailSection.appendChild(newImage);
-  newImage.style = `width: 200px; height: 100px;`
+    const row = document.createElement('div');
+
+    images.forEach((url, idx) => {
+      const listOfImages = document.createElement('span');
+      listOfImages.className = "emailImages";
+
+      const img = document.createElement('img');
+      img.src = url;
+      img.style = `width: 200px; height: 100px;`;
+
+      listOfImages.appendChild(img);
+      row.appendChild(listOfImages);
+    });
+
+    div.appendChild(row);
+    emailSection.appendChild(div);
+  })
 }
+
 
 skip.addEventListener('click', () => {
   fetchImage('https://picsum.photos/v2/list?page=2&limit=100')
@@ -139,23 +147,11 @@ function linkImage(email) {
 
   store.listOfEmails[key].push(storedImage);
   saveStore(store);
-  displayImage(null, email);
+  displayImage();
 }
 
 function preloadImages() {
-  const store = loadStore();
-
-  for (let email in store.listOfEmails) {
-    const imgDisplay = document.querySelector('.saved-emails');
-    const section = document.createElement('section');
-    imgDisplay.appendChild(section);
-    section.innerHTML = `<h1>${email}</h1>`;
-    
-    store.listOfEmails[email].forEach((item, index) => {
-      console.log(`${index}: ${item}`);
-      displayImage(item, email);
-    })
-  }
+  displayImage();
 }
 
 
