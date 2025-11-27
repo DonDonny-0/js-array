@@ -1,15 +1,30 @@
-.email {
+.get-email {
+
+  width: 100%;
 
   form {
 
+    .input-control input {
+      border-radius: 5px;
+    }
+
     .input-control.error input {
       border-color: #ff3860;
+
     }
 
     .input-control .error {
       color: #ff3860;
-      font-size: 9px;
+      font-size: 1rem;
       height: 13px;
+      margin-top: 5px;
+      margin-bottom: 10px;
     } 
+
+    .input-control #email {
+      width: 482px;
+      padding: 5px 0;
+      padding-left: 5px;
+    }
   }
 }

@@ -4,6 +4,7 @@ const imageClass = document.querySelector('.images');
 const section = document.querySelector('section');
 const email = document.querySelector('#email');
 const form = document.querySelector('form');
+const reset = document.querySelector('.reset-btn');
 
 let storedEmail = '';
 let storedImage = '';
@@ -70,7 +71,7 @@ const isValidEmail = email => {
 
 function generateImage(data) {
   const html = `
-  <img src="${data[count].download_url}" alt="generated image" style="width: 500px; height: 400px;">`;
+  <img src="${data[count].download_url}" alt="generated image">`;
   section.innerHTML = html;
   storedImage = data[count].download_url;
   count++;
@@ -97,10 +98,13 @@ function displayImage() {
 
   allEmails.forEach(([email, images]) => {
     console.log(email, images);
-    const div = document.createElement('div');
-    div.innerHTML = `<h1>${email}</h1>`;
+    const dropdown = document.createElement('div');
+    dropdown.className = "item";
+    dropdown.innerHTML = `<a class="show-items">${email}<i class="fas fa-angle-right dropdown"></i></a>`;
 
     const row = document.createElement('div');
+    row.className = 'row';
+    row.style = 'display: none;'
 
     images.forEach((url, idx) => {
       const listOfImages = document.createElement('span');
@@ -108,14 +112,14 @@ function displayImage() {
 
       const img = document.createElement('img');
       img.src = url;
-      img.style = `width: 200px; height: 100px;`;
+      img.style = `width: 100px; height: 80px;`;
 
       listOfImages.appendChild(img);
       row.appendChild(listOfImages);
     });
 
-    div.appendChild(row);
-    emailSection.appendChild(div);
+    dropdown.appendChild(row);
+    emailSection.appendChild(dropdown);
   })
 }
 
@@ -123,6 +127,12 @@ function displayImage() {
 skip.addEventListener('click', () => {
   fetchImage('https://picsum.photos/v2/list?page=2&limit=100')
     .then( data => generateImage(data) )
+})
+
+reset.addEventListener('click', () => {
+  alert('Clear Storage?');
+  localStorage.clear();
+  window.location.reload();
 })
 
 form.addEventListener('submit', e => {

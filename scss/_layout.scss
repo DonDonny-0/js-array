@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
   font-family: sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 html {
@@ -8,6 +9,22 @@ html {
   padding: 0;
 }
 
+img {
+  margin: 0;
+}
+
 body {
   margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-color: #c5d7d8;
+}
+
+.container {
+  margin: 0 5%;
+
+  @media screen and (max-width: $bkpoint-lg) {
+    margin: 0;
+  }
+
 }
