@@ -14,43 +14,52 @@
   <body>
     <header>
       <div class="container">
-        <h1>A Simple Image Generator</h1>
+        <h1>A Simple Image <br>Generator</h1>
       </div>
     </header>
     <main>
-      <div class="wrapper">
-        <div class="image-gen">
-          <div class="images">
-            <section></section>
+      <div class="container">
+        <div class="wrapper">
+          <div class="image-gen">
+            <div class="images">
+              <section></section>
+            </div>
+            <div class="get-email">
+              <form action="index.html" method="post">
+                <div class="input-control">
+                  <label for="email">Enter Your Email To Save An Image</label><br>
+                  <input type="text" id="email" name="email" placeholder="Email">
+                  <div class="error"></div>
+                </div>
+                <div class="form-buttons">
+                  <button type="submit" class="submit-btn">Submit</button>
+                  <button type="button" class="skip-btn">Next</button>
+                  <button type="button" class="reset-btn">Clear Data</button>
+                </div>
+              </form>
+            </div>
           </div>
-          <div class="get-email">
-            <form action="index.html" method="post">
-              <div class="input-control">
-                <label for="email">Enter Your Email To Save An Image</label><br>
-                <input type="text" id="email" name="email" placeholder="Email">
-                <div class="error"></div>
-              </div>
-              <div class="form-buttons">
-                <button type="submit" class="submit-btn">Submit</button>
-                <button type="button" class="skip-btn">Next</button>
-                <button type="button" class="reset-btn">Clear Data</button>
-              </div>
-            </form>
-          </div>
+          <div class="saved-emails">
+          </div>  
         </div>
-        <div class="saved-emails">
-
-        </div>  
       </div>
     </main>
     <footer>
       <div class="footer-content">
-        <p>&copy; 2025 Brandon Thomas Murray - powered by <a target="_blank" href="https://picsum.photos/">Lorem Picsum</a></p>
+        <!-- <p>&copy; 2025 Brandon Thomas Murray - powered by <a target="_blank" href="https://picsum.photos/">Lorem Picsum</a></p> -->
+
+        <p style="margin-right: 5px">&copy; 2025 Brandon Thomas Murray</p>
+        <p>
+          <p id="visible-xs">-</p>
+          <br>
+          <p style="margin-right: 5px">powered by <a target="_blank" href="https://picsum.photos/">Lorem Picsum</a></p>
+        </p>
       </div>
     </footer>
     <script src="js/main.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
+        $('.row').css('display', 'none');
         // jquery for toggle sub menu
         $('.show-items').click(function() {
           $(this).next('.row').slideToggle();

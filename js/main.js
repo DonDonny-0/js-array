@@ -94,7 +94,7 @@ function displayImage() {
   const store = loadStore();
   const allEmails = Object.entries(store.listOfEmails);
   const emailSection = document.querySelector('.saved-emails');
-  emailSection.innerHTML = "";
+  emailSection.innerHTML = "<h1>Saved Images: </h1>";
 
   allEmails.forEach(([email, images]) => {
     console.log(email, images);
@@ -104,7 +104,7 @@ function displayImage() {
 
     const row = document.createElement('div');
     row.className = 'row';
-    row.style = 'display: none;'
+    //row.style = 'display: none;'
 
     images.forEach((url, idx) => {
       const listOfImages = document.createElement('span');

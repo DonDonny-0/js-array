@@ -9,6 +9,37 @@ footer {
   bottom: 0;
 
   .footer-content {
-    margin: -1.5% 0;
+    margin: -0.5% 0;
+
+    p {margin: 0; display: inline-block;}
+
+    br {
+      display: none;
+
+      @media screen and (max-width: $bkpoint-sm) {
+        display: block;
+      }
+    }
+
+    #visible-xs {
+      display: inline;
+      margin-right: 5px;
+
+      @media screen and (max-width: $bkpoint-sm) {
+        display: none;
+      }
+    }
+
+    @media screen and (max-width: $bkpoint-sm) {
+      margin-bottom: -1%;
+    }
+
+    @media screen and (max-width: $bkpoint-lg) {
+      margin: 0;
+    }
+  }
+
+  @media screen and (max-width: $bkpoint-lg) {
+    position: relative;
   }
 }

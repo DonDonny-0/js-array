@@ -8,5 +8,17 @@ header {
 
   h1 {
     margin-top: -1%;
+
+    br {
+      display: none;
+
+      @media screen and (max-width: $bkpoint-sm) {
+        display: block;
+      }
+    }
+  }
+
+  @media screen and (max-width: $bkpoint-sm) {
+    height: 110px;
   }
 }

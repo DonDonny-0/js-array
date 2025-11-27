@@ -18,13 +18,14 @@ body {
   padding: 0;
   height: 100vh;
   background-color: #c5d7d8;
+  overflow-y: scroll;
 }
 
 .container {
   margin: 0 5%;
 
-  @media screen and (max-width: $bkpoint-lg) {
+  @media screen and (max-width: $bkpoint-sm) {
     margin: 0;
   }
-
 }
+

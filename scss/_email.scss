@@ -1,8 +1,7 @@
 .get-email {
 
-  width: 100%;
-
   form {
+    max-width: 100%;
 
     .input-control input {
       border-radius: 5px;
@@ -22,9 +21,19 @@
     } 
 
     .input-control #email {
-      width: 482px;
+      width: 100%;
       padding: 5px 0;
       padding-left: 5px;
+
+      @media screen and (max-width: $bkpoint-sm) {
+        width: 100%;
+      }
     }
+
+    // .form-buttons {
+    //   .reset-btn {
+    //     margin-left: 100px;
+    //   }
+    // }
   }
 }
